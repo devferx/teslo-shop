@@ -1,2 +1,2 @@
-export * from './ui/top-menu';
-export * from './ui/not-found';
+export * from './ui/top-menu/TopMenu';
+export * from './ui/not-found/PageNotFound';
