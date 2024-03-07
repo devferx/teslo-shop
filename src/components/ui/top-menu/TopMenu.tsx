@@ -1,8 +1,14 @@
-import { titleFont } from '@/config/fonts'
+'use client'
+
 import Link from 'next/link'
 import { IoCartOutline, IoSearchOutline } from 'react-icons/io5'
 
+import { titleFont } from '@/config/fonts'
+import { useUIStore } from '@/store'
+
 export const TopMenu = () => {
+  const openSideMenu = useUIStore((state) => state.openSideMenu)
+
   return (
     <nav className="flex w-full items-center justify-between px-5">
       {/* Logo */}
@@ -51,7 +57,10 @@ export const TopMenu = () => {
           </div>
         </Link>
 
-        <button className="m-2 p-2 transition-all hover:bg-gray-100">
+        <button
+          className="m-2 p-2 transition-all hover:bg-gray-100"
+          onClick={() => openSideMenu()}
+        >
           Menú
         </button>
       </div>
