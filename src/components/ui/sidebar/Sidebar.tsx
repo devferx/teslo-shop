@@ -1,6 +1,5 @@
 'use client'
 
-import { useUIStore } from '@/store'
 import clsx from 'clsx'
 import Link from 'next/link'
 import {
@@ -12,6 +11,8 @@ import {
   IoSearchOutline,
   IoTicketOutline,
 } from 'react-icons/io5'
+
+import { useUIStore } from '@/store'
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen)
