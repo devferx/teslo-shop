@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 
 import { titleFont } from '@/config/fonts'
-import { QuantitySelector, SizeSelector } from '@/components'
+import { ProductSlideshow, QuantitySelector, SizeSelector } from '@/components'
 import { initialData } from '@/seed/seed'
 
 interface Props {
@@ -21,7 +21,9 @@ export default function ProductPage({ params }: Props) {
   return (
     <div className="mb-20 mt-5 grid gap-3 md:grid-cols-3">
       {/* SlideShow */}
-      <div className="col-span-1 md:col-span-2">SlideShow</div>
+      <div className="col-span-1 md:col-span-2">
+        <ProductSlideshow title={product.title} images={product.images} />
+      </div>
 
       {/* Content */}
       <div className="col-span-1 px-5">
