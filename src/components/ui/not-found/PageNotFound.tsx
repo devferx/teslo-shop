@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from 'next/link'
+import Image from 'next/image'
 
-import { titleFont } from '@/config/fonts';
+import { titleFont } from '@/config/fonts'
 
 export const PageNotFound = () => {
   return (
@@ -27,5 +27,5 @@ export const PageNotFound = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}

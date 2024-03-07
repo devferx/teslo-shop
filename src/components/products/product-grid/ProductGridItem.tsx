@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { Product } from '@/interfaces';
+import { Product } from '@/interfaces'
 
 interface Props {
-  product: Product;
+  product: Product
 }
 
 export const ProductGridItem = ({ product }: Props) => {
-  const [displayImage, setDisplayImage] = useState(product.images[0]);
+  const [displayImage, setDisplayImage] = useState(product.images[0])
 
   return (
     <div className="fade-in overflow-hidden rounded-md">
@@ -34,5 +34,5 @@ export const ProductGridItem = ({ product }: Props) => {
         <span className="font-bold">${product.price}</span>
       </div>
     </div>
-  );
-};
+  )
+}

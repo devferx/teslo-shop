@@ -3,5 +3,5 @@ export default function ProductsPage() {
     <div>
       <h1>Products Page</h1>
     </div>
-  );
+  )
 }

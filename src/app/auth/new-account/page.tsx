@@ -3,5 +3,5 @@ export default function Home() {
     <main>
       <h1>New Accout</h1>
     </main>
-  );
+  )
 }

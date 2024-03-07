@@ -3,5 +3,5 @@ export default function OrderPage() {
     <div>
       <h1>Order ABC Page</h1>
     </div>
-  );
+  )
 }

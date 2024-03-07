@@ -1,9 +1,9 @@
-import { titleFont } from '@/config/fonts';
+import { titleFont } from '@/config/fonts'
 
 interface Props {
-  title: string;
-  subtitle?: string;
-  className?: string;
+  title: string
+  subtitle?: string
+  className?: string
 }
 
 export const Title = ({ title, subtitle, className }: Props) => {
@@ -16,5 +16,5 @@ export const Title = ({ title, subtitle, className }: Props) => {
       </h1>
       {subtitle && <h3 className="mb-5 text-xl">{subtitle}</h3>}
     </div>
-  );
-};
+  )
+}

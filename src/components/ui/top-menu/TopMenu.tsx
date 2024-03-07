@@ -1,6 +1,6 @@
-import { titleFont } from '@/config/fonts';
-import Link from 'next/link';
-import { IoCartOutline, IoSearchOutline } from 'react-icons/io5';
+import { titleFont } from '@/config/fonts'
+import Link from 'next/link'
+import { IoCartOutline, IoSearchOutline } from 'react-icons/io5'
 
 export const TopMenu = () => {
   return (
@@ -56,5 +56,5 @@ export const TopMenu = () => {
         </button>
       </div>
     </nav>
-  );
-};
+  )
+}
