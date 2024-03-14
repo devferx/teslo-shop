@@ -1,19 +1,7 @@
-## Getting Started
+## Run Development Server
 
-Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clone the repository
+2. Create a copy of the `.env.example` file, rename it to `.env`, and fill in the necessary environment variables
+3. Run `npm install` to install the dependencies
+4. Run `docker-compose up` to start the database
+5. Run `npm run dev` to start the server
