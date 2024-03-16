@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ./src/**/*.{ts,tsx,js,jsx,json,css,scss,md}"
+    "format": "prettier --write ./src/**/*.{ts,tsx,js,jsx,json,css,scss,md}",
+    "seed": "ts-node scripts/seed-db.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
@@ -31,6 +32,7 @@
     "prettier-plugin-tailwindcss": "0.5.11",
     "prisma": "5.11.0",
     "tailwindcss": "^3.3.0",
+    "ts-node": "10.9.2",
     "typescript": "^5"
   }
 }
