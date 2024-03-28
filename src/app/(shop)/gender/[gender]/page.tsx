@@ -5,6 +5,8 @@ import type { Gender } from '@prisma/client'
 import { Pagination, ProductGrid, Title } from '@/components'
 import { getPaginatedProductsWithImages } from '@/actions'
 
+export const revalidate = 60 // 60 seconds
+
 interface Props {
   params: {
     gender: Gender

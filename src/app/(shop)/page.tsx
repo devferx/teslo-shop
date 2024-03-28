@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { getPaginatedProductsWithImages } from '@/actions'
 import { Pagination, ProductGrid, Title } from '@/components'
 
+export const revalidate = 60 // 60 seconds
+
 interface Props {
   searchParams: {
     page?: string
