@@ -10,7 +10,7 @@ export const PageNotFound = () => {
         <h2 className={`${titleFont.className} text-9xl antialiased`}>404</h2>
         <p className="text-xl font-semibold">WHOOPS! Lo sentimos mucho.</p>
         <p className="font-light">
-          <span>Puedes regresar al</span>
+          <span>Puedes regresar al </span>
           <Link href="/" className="font-normal transition-all hover:underline">
             Inicio
           </Link>
