@@ -1,3 +1,4 @@
+import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { titleFont } from '@/config/fonts'
@@ -15,6 +16,22 @@ export const revalidate = 604800 // 7 days
 interface Props {
   params: {
     slug: string
+  }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = params.slug
+  const product = await getProductBySlug(slug)
+
+  return {
+    title: product?.title ?? 'Producto no encontrado',
+    description: product?.description ?? '',
+    openGraph: {
+      title: product?.title ?? 'Producto no encontrado',
+      description: product?.description ?? '',
+      images: [`/products/${product?.images[1]}`],
+      // images: []
+    },
   }
 }
 
