@@ -7,7 +7,9 @@ import {
   QuantitySelector,
   SizeSelector,
 } from '@/components'
-import { initialData } from '@/seed/seed'
+import { getProductBySlug } from '@/actions'
+
+export const revalidate = 604800 // 7 days
 
 interface Props {
   params: {
@@ -15,9 +17,9 @@ interface Props {
   }
 }
 
-export default function ProductPage({ params }: Props) {
+export default async function ProductPage({ params }: Props) {
   const { slug } = params
-  const product = initialData.products.find((product) => product.slug === slug)
+  const product = await getProductBySlug(slug)
 
   if (!product) {
     notFound()
