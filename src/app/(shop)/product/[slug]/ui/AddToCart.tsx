@@ -12,8 +12,12 @@ interface Props {
 export const AddToCart = ({ product }: Props) => {
   const [size, setSize] = useState<Size | undefined>()
   const [quantity, setQuantity] = useState(1)
+  const [posted, setPosted] = useState(false)
+
+  const showSizeError = posted && !size
 
   const addToCart = () => {
+    setPosted(true)
     if (!size) return
 
     console.log({ size, quantity })
@@ -21,6 +25,11 @@ export const AddToCart = ({ product }: Props) => {
 
   return (
     <>
+      {showSizeError && (
+        <span className="mt-2 text-red-500">
+          Debe de seleccionar una talla*
+        </span>
+      )}
       {/* Size Select */}
       <SizeSelector
         selectedSize={size}
