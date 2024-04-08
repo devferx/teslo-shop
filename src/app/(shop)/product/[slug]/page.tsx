@@ -5,11 +5,10 @@ import { titleFont } from '@/config/fonts'
 import {
   ProductMobileSlideshow,
   ProductSlideshow,
-  QuantitySelector,
-  SizeSelector,
   StockLabel,
 } from '@/components'
 import { getProductBySlug } from '@/actions'
+import { AddToCart } from './ui/AddToCart'
 
 export const revalidate = 604800 // 7 days
 
@@ -71,17 +70,7 @@ export default async function ProductPage({ params }: Props) {
         </h1>
         <p className="mb-5 text-lg">${product.price}</p>
 
-        {/* Size Select */}
-        <SizeSelector
-          availableSizes={product.sizes}
-          selectedSize={product.sizes[0]}
-        />
-
-        {/* Quantity Select */}
-        <QuantitySelector quantity={2} />
-
-        {/* Button */}
-        <button className="btn-primary my-5">Agregar al carrito</button>
+        <AddToCart product={product} />
 
         {/* Description */}
 
