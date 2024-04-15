@@ -2,11 +2,8 @@ import Link from 'next/link'
 // import { redirect } from 'next/navigation'
 
 import { Title } from '@/components'
-import { initialData } from '@/seed/seed'
 import { ProductsInCart } from './ui/ProductsInCart'
 import { OrderSummary } from './ui/OrderSummary'
-
-const producsInCart = initialData.products.slice(0, 3)
 
 export default function CartPage() {
   // redirect('/empty')
