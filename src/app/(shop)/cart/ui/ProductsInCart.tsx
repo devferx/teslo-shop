@@ -10,8 +10,12 @@ import Link from 'next/link'
 interface Props {}
 
 export const ProductsInCart = ({}: Props) => {
-  const [isLoaded, setIsLoaded] = useState(false)
   const productsInCart = useCartStore((state) => state.cart)
+  const updateProductQuantity = useCartStore(
+    (state) => state.updateProductQuantity,
+  )
+
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -45,7 +49,12 @@ export const ProductsInCart = ({}: Props) => {
               {product.size} - {product.title}
             </Link>
             <p>${product.price}</p>
-            <QuantitySelector quantity={3} onQuantityChange={console.log} />
+            <QuantitySelector
+              quantity={product.quantity}
+              onQuantityChange={(quantity) =>
+                updateProductQuantity(product, quantity)
+              }
+            />
             <button className="mt-3 underline">Remover</button>
           </div>
         </div>
