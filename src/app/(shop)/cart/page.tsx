@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Title } from '@/components'
 import { initialData } from '@/seed/seed'
 import { ProductsInCart } from './ui/ProductsInCart'
+import { OrderSummary } from './ui/OrderSummary'
 
 const producsInCart = initialData.products.slice(0, 3)
 
@@ -30,19 +31,7 @@ export default function CartPage() {
           <div className="h-fit rounded-xl bg-white p-7 shadow-xl">
             <h2 className="mb-2 text-2xl">Resumen de orden</h2>
 
-            <div className="grid grid-cols-2">
-              <span>No. Productos</span>
-              <span className="text-right">3 artículos</span>
-
-              <span>Subtotal</span>
-              <span className="text-right">$ 100</span>
-
-              <span>Inpuestos (15%)</span>
-              <span className="text-right">$ 100</span>
-
-              <span className="mt-5 text-2xl">Total:</span>
-              <span className="mt-5 text-right text-2xl">$ 100</span>
-            </div>
+            <OrderSummary />
 
             <div className="mb-2 mt-5 w-full">
               <Link
