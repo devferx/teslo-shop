@@ -1,6 +1,9 @@
 import NextAuth, { type NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+import bcrypt from 'bcryptjs'
 import z from 'zod'
+
+import prisma from './lib/prisma'
 
 export const authConfig: NextAuthConfig = {
   secret:
@@ -20,14 +23,21 @@ export const authConfig: NextAuthConfig = {
 
         const { email, password } = parsedCredentials.data
 
-        // console.log({ email, password })
-
         // Search email
+        const user = await prisma.user.findUnique({
+          where: { email: email.toLowerCase() },
+        })
+
+        if (!user) return null
 
         // Compare password
+        const passwordMatch = await bcrypt.compare(password, user.password)
+        if (!passwordMatch) return null
 
         // Return user
-        return null
+        const { password: _, ...rest } = user
+
+        return rest
       },
     }),
   ],
