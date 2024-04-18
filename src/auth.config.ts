@@ -3,6 +3,8 @@ import Credentials from 'next-auth/providers/credentials'
 import z from 'zod'
 
 export const authConfig: NextAuthConfig = {
+  secret:
+    process.env.AUTH_SECRET ?? '3tudkUIOv1KAeg942DYknlgPSunGhBNNh4XSmMUhTD0=',
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account',
