@@ -1,13 +1,13 @@
 'use client'
 
-import Link from 'next/link'
 import { useFormState } from 'react-dom'
+import Link from 'next/link'
 
 import { authenticate } from '@/actions'
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined)
-  console.log(state)
+  console.log({ state })
 
   return (
     <form action={dispatch} className="flex flex-col">
@@ -15,12 +15,14 @@ export const LoginForm = () => {
       <input
         className="mb-5 rounded border bg-gray-200 px-5 py-2"
         type="email"
+        name="email"
       />
 
       <label htmlFor="email">Contraseña</label>
       <input
         className="mb-5 rounded border bg-gray-200 px-5 py-2"
-        type="email"
+        type="password"
+        name="password"
       />
 
       <button className="btn-primary" type="submit">
