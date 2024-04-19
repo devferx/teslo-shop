@@ -13,6 +13,7 @@ import {
 } from 'react-icons/io5'
 
 import { useUIStore } from '@/store'
+import { logout } from '@/actions'
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen)
@@ -85,13 +86,13 @@ export const Sidebar = () => {
           <span className="ml-3 text-xl">Ingresar</span>
         </Link>
 
-        <Link
-          href="/"
-          className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+        <button
+          className="mt-10 flex w-full items-center rounded p-2 transition-all hover:bg-gray-100"
+          onClick={() => logout()}
         >
           <IoLogOutOutline size={30} />
           <span className="ml-3 text-xl">Salir</span>
-        </Link>
+        </button>
 
         {/* Line Separator */}
         <div className="my-10 h-px w-full bg-gray-200" />
