@@ -11,14 +11,17 @@ import {
   IoSearchOutline,
   IoTicketOutline,
 } from 'react-icons/io5'
+import { useSession } from 'next-auth/react'
 
 import { useUIStore } from '@/store'
 import { logout } from '@/actions'
 
 export const Sidebar = () => {
+  const { data: session } = useSession()
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen)
   const closeMenu = useUIStore((state) => state.closeSideMenu)
 
+  console.log({ session })
   return (
     <div>
       {/* Background black */}
