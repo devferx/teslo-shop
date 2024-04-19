@@ -6,10 +6,18 @@ import Link from 'next/link'
 import { authenticate } from '@/actions'
 import { IoInformationOutline } from 'react-icons/io5'
 import clsx from 'clsx'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined)
-  console.log({ state })
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state === 'Success') {
+      router.replace('/')
+    }
+  }, [router, state])
 
   return (
     <form action={dispatch} className="flex flex-col">
@@ -32,7 +40,7 @@ export const LoginForm = () => {
         aria-live="polite"
         aria-atomic="true"
       >
-        {state === 'CredentialsSignin' && (
+        {state === 'InvalidCredentials' && (
           <div className="mb-2 flex flex-row">
             <IoInformationOutline className="h-5 w-5 text-red-500" />
             <p className="text-sm text-red-500">
