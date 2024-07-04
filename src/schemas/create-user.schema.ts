@@ -11,4 +11,4 @@ export const createUserSchema = z.object({
     .min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
 })
 
-type CreateUserSchema = z.infer<typeof createUserSchema>
+export type CreateUserSchema = z.infer<typeof createUserSchema>
