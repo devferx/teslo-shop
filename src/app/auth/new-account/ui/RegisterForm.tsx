@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
-import { registerUser } from '@/actions'
+import { login, registerUser } from '@/actions'
 import { createUserSchema } from '@/schemas'
 
 type FormInputs = {
@@ -33,7 +33,8 @@ export const RegisterForm = () => {
       return
     }
 
-    console.log(resp)
+    await login(email.toLowerCase(), password)
+    window.location.replace('/')
   }
 
   return (
