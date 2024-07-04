@@ -5,6 +5,8 @@ import z from 'zod'
 
 import prisma from './lib/prisma'
 
+const authenticatedRoutes = ['/checkout', '/profile']
+
 export const authConfig: NextAuthConfig = {
   secret:
     process.env.AUTH_SECRET ?? '3tudkUIOv1KAeg942DYknlgPSunGhBNNh4XSmMUhTD0=',
@@ -13,6 +15,18 @@ export const authConfig: NextAuthConfig = {
     newUser: '/auth/new-account',
   },
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user
+      const isOnAuthenticatedRoute = authenticatedRoutes.some((route) =>
+        nextUrl.pathname.startsWith(route),
+      )
+
+      // Redirect unauthenticated users to login page
+      if (isOnAuthenticatedRoute && !isLoggedIn) return false
+
+      return true
+    },
+
     jwt({ token, user }) {
       if (user) {
         token.data = user
