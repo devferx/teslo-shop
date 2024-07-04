@@ -7,17 +7,16 @@ import { authenticate } from '@/actions'
 import { IoInformationOutline } from 'react-icons/io5'
 import clsx from 'clsx'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined)
-  const router = useRouter()
 
   useEffect(() => {
     if (state === 'Success') {
-      router.replace('/')
+      // router.replace('/')
+      window.location.replace('/')
     }
-  }, [router, state])
+  }, [state])
 
   return (
     <form action={dispatch} className="flex flex-col">

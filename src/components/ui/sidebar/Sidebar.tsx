@@ -22,6 +22,12 @@ export const Sidebar = () => {
   const closeMenu = useUIStore((state) => state.closeSideMenu)
 
   const isAuthenticated = !!session?.user
+  const isAdmin = session?.user.role == 'admin'
+
+  const onLogout = async () => {
+    await logout()
+    window.location.replace('/')
+  }
 
   return (
     <div>
@@ -64,27 +70,31 @@ export const Sidebar = () => {
         </div>
 
         {/* Menu */}
-        <Link
-          href="/profile"
-          onClick={() => closeMenu()}
-          className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
-        >
-          <IoPersonOutline size={30} />
-          <span className="ml-3 text-xl">Perfil</span>
-        </Link>
+        {isAuthenticated && (
+          <>
+            <Link
+              href="/profile"
+              onClick={() => closeMenu()}
+              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+            >
+              <IoPersonOutline size={30} />
+              <span className="ml-3 text-xl">Perfil</span>
+            </Link>
 
-        <Link
-          href="/"
-          className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
-        >
-          <IoTicketOutline size={30} />
-          <span className="ml-3 text-xl">Ordenes</span>
-        </Link>
+            <Link
+              href="/"
+              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+            >
+              <IoTicketOutline size={30} />
+              <span className="ml-3 text-xl">Ordenes</span>
+            </Link>
+          </>
+        )}
 
         {isAuthenticated && (
           <button
             className="mt-10 flex w-full items-center rounded p-2 transition-all hover:bg-gray-100"
-            onClick={() => logout()}
+            onClick={onLogout}
           >
             <IoLogOutOutline size={30} />
             <span className="ml-3 text-xl">Salir</span>
@@ -101,32 +111,36 @@ export const Sidebar = () => {
           </Link>
         )}
 
-        {/* Line Separator */}
-        <div className="my-10 h-px w-full bg-gray-200" />
+        {isAdmin && (
+          <>
+            {/* Line Separator */}
+            <div className="my-10 h-px w-full bg-gray-200" />
 
-        <Link
-          href="/"
-          className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
-        >
-          <IoLogOutOutline size={30} />
-          <span className="ml-3 text-xl">Productos</span>
-        </Link>
+            <Link
+              href="/"
+              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+            >
+              <IoLogOutOutline size={30} />
+              <span className="ml-3 text-xl">Productos</span>
+            </Link>
 
-        <Link
-          href="/"
-          className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
-        >
-          <IoTicketOutline size={30} />
-          <span className="ml-3 text-xl">Ordenes</span>
-        </Link>
+            <Link
+              href="/"
+              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+            >
+              <IoTicketOutline size={30} />
+              <span className="ml-3 text-xl">Ordenes</span>
+            </Link>
 
-        <Link
-          href="/"
-          className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
-        >
-          <IoPeopleOutline size={30} />
-          <span className="ml-3 text-xl">Usuarios</span>
-        </Link>
+            <Link
+              href="/"
+              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+            >
+              <IoPeopleOutline size={30} />
+              <span className="ml-3 text-xl">Usuarios</span>
+            </Link>
+          </>
+        )}
       </nav>
     </div>
   )
