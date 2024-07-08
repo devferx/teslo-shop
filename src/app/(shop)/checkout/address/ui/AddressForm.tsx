@@ -7,20 +7,33 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AddressFormSchema, AddressFormInputs } from '@/schemas'
 
 import type { Country } from '@/interfaces'
+import { useAddressStore } from '@/store'
+import { useEffect } from 'react'
 
 interface Props {
   countries: Country[]
 }
 
 export const AddressForm = ({ countries }: Props) => {
-  const { formState, register, handleSubmit } = useForm<AddressFormInputs>({
-    resolver: zodResolver(AddressFormSchema),
-  })
+  const { formState, register, handleSubmit, reset } =
+    useForm<AddressFormInputs>({
+      resolver: zodResolver(AddressFormSchema),
+    })
   const { isValid } = formState
-  console.log('🚀 ~ AddressForm ~ isValid:', isValid)
+
+  const address = useAddressStore((state) => state.address)
+  const setAddress = useAddressStore((state) => state.setAddress)
+
+  useEffect(() => {
+    console.log({ address })
+    if (address.firstName) {
+      reset(address)
+    }
+  }, [address, reset])
 
   const onSubmit = (data: AddressFormInputs) => {
     console.log({ data })
+    setAddress(data)
   }
 
   return (
