@@ -4,7 +4,7 @@ import { Title } from '@/components'
 export default function CheckoutAddressPage() {
   return (
     <div className="mb-72 flex flex-col px-10 sm:items-center sm:justify-center sm:px-0">
-      <div className="flex  w-full flex-col justify-center text-left xl:w-[1000px]">
+      <div className="flex w-full flex-col justify-center text-left xl:w-[1000px]">
         <Title title="Dirección" subtitle="Dirección de entrega" />
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-5">
@@ -54,7 +54,7 @@ export default function CheckoutAddressPage() {
           <div className="mb-2 flex flex-col sm:mt-10">
             <Link
               href="/checkout"
-              className="btn-primary flex w-full justify-center sm:w-1/2 "
+              className="btn-primary flex w-full justify-center sm:w-1/2"
             >
               Siguiente
             </Link>

@@ -62,7 +62,7 @@ export const TopMenu = () => {
         >
           <div className="relative">
             {isLoaded && totalItemsInCart > 0 && (
-              <span className="fade-in absolute -right-2 -top-2 rounded-full bg-blue-700 px-1 text-xs font-bold text-white ">
+              <span className="fade-in absolute -right-2 -top-2 rounded-full bg-blue-700 px-1 text-xs font-bold text-white">
                 {totalItemsInCart}
               </span>
             )}

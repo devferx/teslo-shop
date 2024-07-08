@@ -47,11 +47,11 @@ export default function OrdersPage() {
               <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
                 Mark
               </td>
-              <td className="flex items-center whitespace-nowrap  px-6 py-4 text-sm font-light text-gray-900">
+              <td className="flex items-center whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
                 <IoCardOutline className="text-green-800" />
                 <span className="mx-2 text-green-800">Pagada</span>
               </td>
-              <td className="px-6 text-sm font-light text-gray-900 ">
+              <td className="px-6 text-sm font-light text-gray-900">
                 <Link href="/orders/123" className="hover:underline">
                   Ver orden
                 </Link>
@@ -65,11 +65,11 @@ export default function OrdersPage() {
               <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
                 Mark
               </td>
-              <td className="flex items-center whitespace-nowrap  px-6 py-4 text-sm font-light text-gray-900">
+              <td className="flex items-center whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
                 <IoCardOutline className="text-red-800" />
                 <span className="mx-2 text-red-800">No Pagada</span>
               </td>
-              <td className="px-6 text-sm font-light text-gray-900 ">
+              <td className="px-6 text-sm font-light text-gray-900">
                 <Link href="/orders/123" className="hover:underline">
                   Ver orden
                 </Link>

@@ -60,7 +60,7 @@ export const Sidebar = () => {
         />
 
         {/* Input */}
-        <div className="relative mt-14 ">
+        <div className="relative mt-14">
           <IoSearchOutline className="absolute left-2 top-2" size={20} />
           <input
             className="w-full rounded border-b-2 border-gray-200 bg-gray-50 py-1 pl-10 pr-10 text-xl focus:border-blue-500 focus:outline-none"

@@ -40,7 +40,7 @@ export const Pagination = ({ totalPages }: Props) => {
     <div className="mb-32 mt-10 flex justify-center text-center">
       <nav aria-label="Page navigation example">
         <ul className="list-style-none flex">
-          <li className="page-item ">
+          <li className="page-item">
             <Link
               className="page-link relative block rounded border-0 bg-transparent px-3 py-1.5 text-gray-800 outline-none transition-all duration-300 hover:bg-gray-200 hover:text-gray-800 focus:shadow-none"
               href={createPageUrl(currentPage - 1)}
