@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export const AddressForm = ({ countries, userStoredAddress }: Props) => {
+  const router = useRouter()
   const { data: session } = useSession({ required: true })
 
   const { formState, register, handleSubmit, reset } =
@@ -40,15 +42,17 @@ export const AddressForm = ({ countries, userStoredAddress }: Props) => {
     }
   }, [address, reset])
 
-  const onSubmit = (data: AddressFormInputs) => {
+  const onSubmit = async (data: AddressFormInputs) => {
     setAddress(data)
     const { rememberAddress, ...restAddress } = data
 
     if (rememberAddress) {
-      setUserAddress(restAddress, session!.user.id)
+      await setUserAddress(restAddress, session!.user.id)
     } else {
-      deleteUserAddress(session!.user.id)
+      await deleteUserAddress(session!.user.id)
     }
+
+    router.push('/checkout')
   }
 
   return (
