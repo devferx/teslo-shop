@@ -6,7 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { AddressFormSchema, AddressFormInputs } from '@/schemas'
 
-export const AddressForm = () => {
+import type { Country } from '@/interfaces'
+
+interface Props {
+  countries: Country[]
+}
+
+export const AddressForm = ({ countries }: Props) => {
   const { formState, register, handleSubmit } = useForm<AddressFormInputs>({
     resolver: zodResolver(AddressFormSchema),
   })
@@ -83,7 +89,11 @@ export const AddressForm = () => {
           {...register('country')}
         >
           <option value="">[ Seleccione ]</option>
-          <option value="CRI">Costa Rica</option>
+          {countries.map((country) => (
+            <option key={country.id} value={country.id}>
+              {country.name}
+            </option>
+          ))}
         </select>
       </div>
 
