@@ -11,18 +11,23 @@ import { AddressFormInputs, AddressFormSchema } from '@/schemas'
 import { deleteUserAddress, setUserAddress } from '@/actions'
 import { useAddressStore } from '@/store'
 
-import type { Country } from '@/interfaces'
+import type { Address, Country } from '@/interfaces'
 
 interface Props {
   countries: Country[]
+  userStoredAddress?: Partial<Address>
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userStoredAddress }: Props) => {
   const { data: session } = useSession({ required: true })
 
   const { formState, register, handleSubmit, reset } =
     useForm<AddressFormInputs>({
       resolver: zodResolver(AddressFormSchema),
+      defaultValues: {
+        ...userStoredAddress,
+        rememberAddress: true,
+      },
     })
   const { isValid } = formState
 
@@ -30,7 +35,6 @@ export const AddressForm = ({ countries }: Props) => {
   const setAddress = useAddressStore((state) => state.setAddress)
 
   useEffect(() => {
-    console.log({ address })
     if (address.firstName) {
       reset(address)
     }
