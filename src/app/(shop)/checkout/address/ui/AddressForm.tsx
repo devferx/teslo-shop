@@ -1,20 +1,25 @@
 'use client'
 
-import clsx from 'clsx'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import clsx from 'clsx'
 
-import { AddressFormSchema, AddressFormInputs } from '@/schemas'
+import { AddressFormInputs, AddressFormSchema } from '@/schemas'
+
+import { setUserAddress } from '@/actions'
+import { useAddressStore } from '@/store'
 
 import type { Country } from '@/interfaces'
-import { useAddressStore } from '@/store'
-import { useEffect } from 'react'
 
 interface Props {
   countries: Country[]
 }
 
 export const AddressForm = ({ countries }: Props) => {
+  const { data: session } = useSession({ required: true })
+
   const { formState, register, handleSubmit, reset } =
     useForm<AddressFormInputs>({
       resolver: zodResolver(AddressFormSchema),
@@ -32,8 +37,14 @@ export const AddressForm = ({ countries }: Props) => {
   }, [address, reset])
 
   const onSubmit = (data: AddressFormInputs) => {
-    console.log({ data })
     setAddress(data)
+    const { rememberAddress, ...restAddress } = data
+
+    if (rememberAddress) {
+      setUserAddress(restAddress, session!.user.id)
+    } else {
+      // TODO: server action
+    }
   }
 
   return (
