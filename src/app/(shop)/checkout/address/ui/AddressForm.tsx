@@ -8,7 +8,7 @@ import clsx from 'clsx'
 
 import { AddressFormInputs, AddressFormSchema } from '@/schemas'
 
-import { setUserAddress } from '@/actions'
+import { deleteUserAddress, setUserAddress } from '@/actions'
 import { useAddressStore } from '@/store'
 
 import type { Country } from '@/interfaces'
@@ -43,7 +43,7 @@ export const AddressForm = ({ countries }: Props) => {
     if (rememberAddress) {
       setUserAddress(restAddress, session!.user.id)
     } else {
-      // TODO: server action
+      deleteUserAddress(session!.user.id)
     }
   }
 
