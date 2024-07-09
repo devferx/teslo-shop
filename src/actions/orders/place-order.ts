@@ -59,4 +59,87 @@ export const placeOrder = async (
   )
 
   // Crear transacción
+  try {
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      // 1. Update product stock
+      const updatedProductPromises = products.map((product) => {
+        const productQuantity = productIds
+          .filter((p) => p.productId === product.id)
+          .reduce((acc, item) => item.quantity + acc, 0)
+
+        if (productQuantity === 0) {
+          throw new Error(`${product.id} no tiene cantidad definida`)
+        }
+
+        return tx.product.update({
+          where: { id: product.id },
+          data: {
+            inStock: {
+              decrement: productQuantity,
+            },
+          },
+        })
+      })
+
+      const updatedProducts = await Promise.all(updatedProductPromises)
+      // Validate if all products were updated
+      updatedProducts.forEach((product) => {
+        if (product.inStock < 0) {
+          throw new Error(`${product.title} no tiene inventario suficiente`)
+        }
+      })
+
+      // 2. Create order
+      const order = await tx.order.create({
+        data: {
+          userId,
+          itemsInOrder,
+          subTotal,
+          tax,
+          total,
+          OrderItem: {
+            createMany: {
+              data: productIds.map((p) => ({
+                productId: p.productId,
+                price:
+                  products.find((product) => product.id === p.productId)
+                    ?.price ?? -1,
+                quantity: p.quantity,
+                size: p.size,
+              })),
+            },
+          },
+        },
+      })
+
+      // If price is -1, throw error
+
+      // 3. Create order address
+      const { country, ...restAddress } = address
+      const orderAddress = await tx.orderAddress.create({
+        data: {
+          ...restAddress,
+          countryId: country,
+          orderId: order.id,
+        },
+      })
+
+      return {
+        order: order,
+        orderAddress: orderAddress,
+        updatedProducts: updatedProducts,
+      }
+    })
+
+    return {
+      ok: true,
+      order: prismaTx.order,
+      prismaTx,
+    }
+  } catch (error: any) {
+    return {
+      ok: false,
+      message: error.message,
+    }
+  }
 }
