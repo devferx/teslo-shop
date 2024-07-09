@@ -4,18 +4,37 @@ import { useState, useEffect } from 'react'
 
 import { useAddressStore, useCartStore } from '@/store'
 import { currencyFormat } from '@/utils'
+import clsx from 'clsx'
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false)
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 
   const address = useAddressStore((state) => state.address)
   const { itemsInCart, subTotal, tax, total } = useCartStore((state) =>
     state.getSummaryInformation(),
   )
 
+  const cart = useCartStore((state) => state.cart)
+
   useEffect(() => {
     setLoaded(true)
   }, [])
+
+  const onPlaceOrder = async () => {
+    setIsPlacingOrder(true)
+    const productsToOrder = cart.map((product) => ({
+      productId: product.id,
+      quantity: product.quantity,
+      size: product.size,
+    }))
+
+    console.log({ address, productsToOrder })
+
+    // TODO: Server Action
+
+    setIsPlacingOrder(false)
+  }
 
   if (!loaded) {
     return <p>Cargando...</p>
@@ -72,8 +91,15 @@ export const PlaceOrder = () => {
             </a>
           </span>
         </p>
+
+        {/* <p className="text-red-500">Error de creación</p> */}
+
         <button
-          className="btn-primary flex justify-center"
+          className={clsx({
+            'btn-primary': !isPlacingOrder,
+            'btn-disabled': isPlacingOrder,
+          })}
+          onClick={onPlaceOrder}
           // href="/orders/123"
         >
           Colocar Orden
