@@ -1,15 +1,12 @@
-import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import Image from 'next/image'
-
-import { Title } from '@/components'
-import { initialData } from '@/seed/seed'
 import clsx from 'clsx'
 import { IoCardOutline } from 'react-icons/io5'
-import { getOrderById } from '@/actions'
-import { redirect } from 'next/navigation'
-import { currencyFormat } from '@/utils'
 
-const producsInCart = initialData.products.slice(0, 3)
+import { getOrderById } from '@/actions'
+
+import { Title } from '@/components'
+import { currencyFormat } from '@/utils'
 
 interface Props {
   params: {
