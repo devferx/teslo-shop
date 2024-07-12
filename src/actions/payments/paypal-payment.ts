@@ -1,5 +1,6 @@
 'use server'
 
+import prisma from '@/lib/prisma'
 import type { PayPalOrderStatusResponse } from '@/interfaces'
 
 export const paypalCheckPayment = async (paypalTransactionId: string) => {
@@ -33,7 +34,23 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
   // TODO Realiza la acutliazación de la orden en la base de datos
   // const {  } = purse_units[0] // TODO: invoce ID
 
-  console.log({ status, purchase_units })
+  try {
+    await prisma.order.update({
+      where: {
+        id: '50c8638a-c1c2-4f38-8ca8-3dd61c4d33cc',
+      },
+      data: { isPaid: true, paidAt: new Date() },
+    })
+
+    // TODO: Revalidar el path
+  } catch (error) {
+    console.log(error)
+    return {
+      ok: false,
+      message:
+        'Error al actualizar la orden, contacte al administrador, el pago si se realizo correctamente',
+    }
+  }
 }
 
 const getPayPalBearerToken = async (): Promise<string | null> => {
@@ -60,9 +77,10 @@ const getPayPalBearerToken = async (): Promise<string | null> => {
   }
 
   try {
-    const result: any = await fetch(oauth2Url, requestOptions).then((r) =>
-      r.json(),
-    )
+    const result: any = await fetch(oauth2Url, {
+      ...requestOptions,
+      cache: 'no-store',
+    }).then((r) => r.json())
     return result.access_token as string
   } catch (error) {
     console.log(error)
@@ -86,10 +104,10 @@ const verifyPayPalPayment = async (
   }
 
   try {
-    const resp: PayPalOrderStatusResponse = await fetch(
-      paypalOrderUrl,
-      requestOptions,
-    ).then((r) => r.json())
+    const resp: PayPalOrderStatusResponse = await fetch(paypalOrderUrl, {
+      ...requestOptions,
+      cache: 'no-store',
+    }).then((r) => r.json())
     return resp
   } catch (error) {
     console.log(error)
