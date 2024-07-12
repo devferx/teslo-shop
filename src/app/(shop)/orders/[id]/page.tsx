@@ -5,7 +5,7 @@ import { IoCardOutline } from 'react-icons/io5'
 
 import { getOrderById } from '@/actions'
 
-import { PayPalButton, Title } from '@/components'
+import { OrderStatus, PayPalButton, Title } from '@/components'
 import { currencyFormat } from '@/utils'
 
 interface Props {
@@ -41,20 +41,7 @@ export default async function SingleOrderPage({ params }: Props) {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
           {/* Cart */}
           <div className="mt-5 flex flex-col">
-            <div
-              className={clsx(
-                'mb-5 flex items-center rounded-lg px-3.5 py-2 text-xs font-bold text-white',
-                {
-                  'bg-red-500': !order.isPaid,
-                  'bg-green-700': order!.isPaid,
-                },
-              )}
-            >
-              <IoCardOutline size={30} />
-              <span className="mx-2">
-                {order.isPaid ? 'Pagada' : 'Pendiente de pago'}
-              </span>
-            </div>
+            <OrderStatus isPaid={order.isPaid} />
 
             {orderItems.map(({ product, quantity, price, size }) => (
               <div className="mb-5 flex" key={product.slug + '-' + size}>
@@ -128,7 +115,11 @@ export default async function SingleOrderPage({ params }: Props) {
             </div>
 
             <div className="mb-2 mt-5 w-full">
-              <PayPalButton amount={order.total} orderId={order.id} />
+              {order?.isPaid ? (
+                <OrderStatus isPaid={order.isPaid} />
+              ) : (
+                <PayPalButton amount={order.total} orderId={order.id} />
+              )}
             </div>
           </div>
         </div>
