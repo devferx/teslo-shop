@@ -13,6 +13,7 @@ export * from './orders/get-orders-by-user'
 export * from './orders/place-order'
 
 export * from './payments/set-transaction-id'
+export * from './payments/paypal-payment'
 
 export * from './product/get-product-by-slug'
 export * from './product/get-stock-by-slug'
