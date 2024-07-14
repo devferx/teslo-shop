@@ -118,8 +118,9 @@ export const Sidebar = () => {
             <div className="my-10 h-px w-full bg-gray-200" />
 
             <Link
-              href="/"
               className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+              href="/admin/products"
+              onClick={() => closeMenu()}
             >
               <IoLogOutOutline size={30} />
               <span className="ml-3 text-xl">Productos</span>
