@@ -6,6 +6,7 @@ import z from 'zod'
 import prisma from './lib/prisma'
 
 const authenticatedRoutes = ['/checkout', '/profile']
+const adminRoutes = ['/admin']
 
 export const authConfig: NextAuthConfig = {
   secret: process.env.AUTH_SECRET,
@@ -16,12 +17,20 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
+      const isAdmin = auth?.user?.role === 'admin'
+
       const isOnAuthenticatedRoute = authenticatedRoutes.some((route) =>
+        nextUrl.pathname.startsWith(route),
+      )
+      const isOnAdminRoute = adminRoutes.some((route) =>
         nextUrl.pathname.startsWith(route),
       )
 
       // Redirect unauthenticated users to login page
       if (isOnAuthenticatedRoute && !isLoggedIn) return false
+
+      // Redirect non-admin users to home page
+      if (isOnAdminRoute && !isAdmin) return false
 
       return true
     },
