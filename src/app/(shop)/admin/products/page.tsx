@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { IoCardOutline } from 'react-icons/io5'
 
-import { Pagination, Title } from '@/components'
+import { Pagination, ProductImage, Title } from '@/components'
 import { getPaginatedProductsWithImages } from '@/actions'
 import Image from 'next/image'
 import { currencyFormat } from '@/utils'
@@ -82,9 +82,9 @@ export default async function ProductsPage({ searchParams }: Props) {
               >
                 <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                   <Link href={`/product/${product.slug}`}>
-                    <Image
+                    <ProductImage
                       className="h-20 w-20 rounded object-cover"
-                      src={`/products/${product.ProductImage[0].url}`}
+                      src={product.ProductImage[0]?.url}
                       width={80}
                       height={80}
                       alt={product.title}

@@ -1,10 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
 import { useCartStore } from '@/store'
-import { QuantitySelector } from '@/components'
+import { ProductImage, QuantitySelector } from '@/components'
 import Link from 'next/link'
 
 interface Props {}
@@ -30,9 +29,9 @@ export const ProductsInCart = ({}: Props) => {
     <>
       {productsInCart.map((product) => (
         <div className="mb-5 flex" key={`${product.slug}-${product.size}`}>
-          <Image
-            className="mr-5 rounded"
-            src={`/products/${product.image}`}
+          <ProductImage
+            className="mr-5 rounded object-cover"
+            src={product.image}
             alt={product.title}
             width={100}
             height={100}
