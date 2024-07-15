@@ -12,6 +12,9 @@ export const ProductFormSchema = z.object({
   tags: z.string(),
   gender: z.nativeEnum(Gender),
   categoryId: z.string(),
+  images: z.any(),
 })
 
-export type ProductFormInputs = z.infer<typeof ProductFormSchema>
+export type ProductFormInputs = z.infer<typeof ProductFormSchema> & {
+  images: FileList
+}

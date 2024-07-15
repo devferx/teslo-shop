@@ -1,18 +1,22 @@
 'use client'
 
 import clsx from 'clsx'
-import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { createUpdateProduct } from '@/actions'
 import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
+import { ProductImage } from '@/components'
 
-import type { Category, Product, ProductImage } from '@/interfaces'
+import type {
+  Category,
+  Product,
+  ProductImage as ProductWithImage,
+} from '@/interfaces'
 
 interface Props {
-  product: Partial<Product> & { ProductImage?: ProductImage[] }
+  product: Partial<Product> & { ProductImage?: ProductWithImage[] }
   categories: Category[]
 }
 
@@ -28,6 +32,7 @@ export const ProductForm = ({ product, categories }: Props) => {
         ...product,
         tags: product.tags?.join(', '),
         sizes: product.sizes ?? [],
+        images: undefined,
       },
     })
   const { isValid } = formState
@@ -36,7 +41,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
   const onSubmit = async (data: ProductFormInputs) => {
     const formData = new FormData()
-    const { ...productToSave } = data
+    const { images, ...productToSave } = data
 
     if (product.id) {
       formData.append('id', product.id)
@@ -50,6 +55,12 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('tags', productToSave.tags)
     formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
+
+    if (images) {
+      for (let idx = 0; idx < images.length; idx++) {
+        formData.append('images', images[idx])
+      }
+    }
 
     const { ok, product: updatedProduct } = await createUpdateProduct(formData)
 
@@ -190,10 +201,11 @@ export const ProductForm = ({ product, categories }: Props) => {
           <div className="mb-2 flex flex-col">
             <span>Fotos</span>
             <input
-              type="file"
-              multiple
               className="rounded-md border bg-gray-200 p-2"
-              accept="image/png, image/jpeg"
+              multiple
+              type="file"
+              accept="image/*"
+              {...register('images')}
             />
           </div>
 
@@ -203,8 +215,8 @@ export const ProductForm = ({ product, categories }: Props) => {
                 className="overflow-hidden rounded-xl shadow-md"
                 key={image.id}
               >
-                <Image
-                  src={`/products/${image.url}`}
+                <ProductImage
+                  src={image.url}
                   alt={product.title ?? ''}
                   width={300}
                   height={300}
