@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev --port=3005",
     "dev:turbo": "next dev --port=3005 --turbo",
-    "build": "next build",
+    "build": "npm run prisma:deploy && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write ./src/**/*.{ts,tsx,js,jsx,json,css,scss,md}",
+    "prisma:deploy": "npx prisma migrate deploy && prisma generate",
     "seed": "ts-node scripts/seed-db.ts"
   },
   "dependencies": {
