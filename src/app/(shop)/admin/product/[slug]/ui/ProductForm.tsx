@@ -3,6 +3,7 @@
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { createUpdateProduct } from '@/actions'
@@ -18,6 +19,8 @@ interface Props {
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 export const ProductForm = ({ product, categories }: Props) => {
+  const router = useRouter()
+
   const { formState, register, handleSubmit, getValues, setValue, watch } =
     useForm<ProductFormInputs>({
       resolver: zodResolver(ProductFormSchema),
@@ -48,8 +51,14 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
 
-    const resp = await createUpdateProduct(formData)
-    console.log(resp)
+    const { ok, product: updatedProduct } = await createUpdateProduct(formData)
+
+    if (!ok) {
+      alert('Producto no guardado')
+      return
+    }
+
+    router.replace(`/admin/product/${updatedProduct?.slug}`)
   }
 
   const onSizeChanged = (size: string) => {
