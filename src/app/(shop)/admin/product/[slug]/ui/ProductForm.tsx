@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { createUpdateProduct } from '@/actions'
+import { createUpdateProduct, deleteProductImage } from '@/actions'
 import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
 import { ProductImage } from '@/components'
 
@@ -224,7 +224,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
                 <button
                   className="btn-danger w-full"
-                  onClick={() => console.log('click')}
+                  onClick={() => deleteProductImage(image.id, image.url)}
                   type="button"
                 >
                   Eliminar

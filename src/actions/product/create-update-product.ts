@@ -90,9 +90,7 @@ const uploadImages = async (images: File[]) => {
         const base64Image = Buffer.from(buffer).toString('base64')
 
         return cloudinary.uploader
-          .upload(`data:image/png;base64,${base64Image}`, {
-            folder: 'teslo-shop',
-          })
+          .upload(`data:image/png;base64,${base64Image}`)
           .then((r) => r.secure_url)
       } catch (error) {
         console.log(error)
