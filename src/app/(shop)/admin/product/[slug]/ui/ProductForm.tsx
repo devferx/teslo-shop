@@ -5,12 +5,13 @@ import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import type { Category, Product, ProductImage } from '@/interfaces'
-import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
 import { createUpdateProduct } from '@/actions'
+import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
+
+import type { Category, Product, ProductImage } from '@/interfaces'
 
 interface Props {
-  product: Product & { ProductImage?: ProductImage[] }
+  product: Partial<Product> & { ProductImage?: ProductImage[] }
   categories: Category[]
 }
 
@@ -22,7 +23,7 @@ export const ProductForm = ({ product, categories }: Props) => {
       resolver: zodResolver(ProductFormSchema),
       defaultValues: {
         ...product,
-        tags: product.tags.join(', '),
+        tags: product.tags?.join(', '),
         sizes: product.sizes ?? [],
       },
     })
@@ -34,7 +35,9 @@ export const ProductForm = ({ product, categories }: Props) => {
     const formData = new FormData()
     const { ...productToSave } = data
 
-    formData.append('id', product.id)
+    if (product.id) {
+      formData.append('id', product.id)
+    }
     formData.append('title', productToSave.title)
     formData.append('slug', productToSave.slug)
     formData.append('description', productToSave.description)
@@ -45,7 +48,8 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
 
-    const { ok } = await createUpdateProduct(formData)
+    const resp = await createUpdateProduct(formData)
+    console.log(resp)
   }
 
   const onSizeChanged = (size: string) => {
@@ -131,7 +135,7 @@ export const ProductForm = ({ product, categories }: Props) => {
               <option
                 className="capitalize"
                 key={category.id}
-                value={category.name}
+                value={category.id}
               >
                 {category.name}
               </option>
@@ -144,6 +148,15 @@ export const ProductForm = ({ product, categories }: Props) => {
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
+        <div className="mb-2 flex flex-col">
+          <span>Inventario</span>
+          <input
+            className="rounded-md border bg-gray-200 p-2"
+            {...register('inStock', { required: true, valueAsNumber: true })}
+            type="number"
+          />
+        </div>
+
         {/* As checkboxes */}
         <div className="flex flex-col">
           <span>Tallas</span>

@@ -8,10 +8,8 @@ export const createUpdateProduct = async (formData: FormData) => {
   const data = Object.fromEntries(formData)
   const productParsed = productSchema.safeParse(data)
 
-  if (!productParsed.success) {
-    console.log('productParsed.error', productParsed.error)
-    return { ok: false }
-  }
+  if (!productParsed.success)
+    return { ok: false, message: 'Error al parsear el producto' }
 
   const product = productParsed.data
   product.slug = product.slug.toLowerCase().replace(/ /g, '-').trim()
@@ -35,9 +33,16 @@ export const createUpdateProduct = async (formData: FormData) => {
 
       console.log('product updated', product)
     } else {
+      product = await tx.product.create({
+        data: {
+          ...rest,
+          sizes: { set: rest.sizes as Size[] },
+          tags: { set: tagsArray },
+        },
+      })
     }
 
-    return {}
+    return { product }
   })
 
   // TODO: RevalidatePaths
