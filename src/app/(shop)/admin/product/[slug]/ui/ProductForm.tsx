@@ -1,14 +1,15 @@
 'use client'
 
-import { Product } from '@/interfaces'
+import { Category, Product } from '@/interfaces'
 
 interface Props {
   product: Product
+  categories: Category[]
 }
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
-export const ProductForm = ({ product }: Props) => {
+export const ProductForm = ({ product, categories }: Props) => {
   return (
     <form className="mb-16 grid grid-cols-1 gap-3 px-5 sm:grid-cols-2 sm:px-0">
       {/* Textos */}
@@ -56,6 +57,15 @@ export const ProductForm = ({ product }: Props) => {
           <span>Categoria</span>
           <select className="rounded-md border bg-gray-200 p-2">
             <option value="">[Seleccione]</option>
+            {categories.map((category) => (
+              <option
+                className="capitalize"
+                key={category.id}
+                value={category.name}
+              >
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 
