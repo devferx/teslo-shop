@@ -15,7 +15,7 @@ export const productSchema = z.object({
     .number()
     .min(0)
     .transform((val) => Number(val.toFixed(2))),
-  categoryID: z.string().uuid(),
+  categoryId: z.string().uuid(),
   sizes: z.coerce.string().transform((val) => val.split(',')),
   tags: z.string(),
   gender: z.nativeEnum(Gender),

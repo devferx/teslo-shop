@@ -42,7 +42,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('inStock', productToSave.inStock.toString())
     formData.append('sizes', productToSave.sizes.toString())
     formData.append('tags', productToSave.tags)
-    formData.append('categoryID', productToSave.categoryId)
+    formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
 
     const { ok } = await createUpdateProduct(formData)
