@@ -1,11 +1,12 @@
 'use client'
 
+import clsx from 'clsx'
 import Image from 'next/image'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
 import type { Category, Product, ProductImage } from '@/interfaces'
+import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
 
 interface Props {
   product: Product & { ProductImage?: ProductImage[] }
@@ -15,18 +16,27 @@ interface Props {
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 export const ProductForm = ({ product, categories }: Props) => {
-  const { formState, register, handleSubmit } = useForm<ProductFormInputs>({
-    resolver: zodResolver(ProductFormSchema),
-    defaultValues: {
-      ...product,
-      tags: product.tags.join(', '),
-      sizes: product.sizes ?? [],
-    },
-  })
+  const { formState, register, handleSubmit, getValues, setValue, watch } =
+    useForm<ProductFormInputs>({
+      resolver: zodResolver(ProductFormSchema),
+      defaultValues: {
+        ...product,
+        tags: product.tags.join(', '),
+        sizes: product.sizes ?? [],
+      },
+    })
   const { isValid } = formState
+
+  watch('sizes')
 
   const onSubmit = async (data: ProductFormInputs) => {
     console.log(data)
+  }
+
+  const onSizeChanged = (size: string) => {
+    const sizes = new Set(getValues('sizes'))
+    sizes.has(size) ? sizes.delete(size) : sizes.add(size)
+    setValue('sizes', Array.from(sizes))
   }
 
   return (
@@ -127,7 +137,13 @@ export const ProductForm = ({ product, categories }: Props) => {
               // bg-blue-500 text-white <--- si está seleccionado
               <div
                 key={size}
-                className="mr-2 flex h-10 w-10 items-center justify-center rounded-md border"
+                onClick={() => onSizeChanged(size)}
+                className={clsx(
+                  'mb-2 mr-2 flex h-10 w-14 cursor-pointer items-center justify-center rounded-md border p-2 transition-all',
+                  {
+                    'bg-blue-500 text-white': getValues('sizes').includes(size),
+                  },
+                )}
               >
                 <span>{size}</span>
               </div>
