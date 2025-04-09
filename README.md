@@ -1,4 +1,9 @@
 <h1 align="center">Welcome to Teslo Shop 👋</h1>
+
+<p align="center">
+  <img src="https://res.cloudinary.com/dtvbfnjlc/image/upload/690shots_so_fyrucc.png" alt="Teslo Shop Preview" />
+</p>
+
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://twitter.com/devferx" target="_blank">
