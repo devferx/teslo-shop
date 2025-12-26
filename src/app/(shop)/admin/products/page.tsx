@@ -11,12 +11,13 @@ import { currencyFormat } from '@/utils'
 export const revalidate = 0
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     page?: string
-  }
+  }>
 }
 
-export default async function ProductsPage({ searchParams }: Props) {
+export default async function ProductsPage(props: Props) {
+  const searchParams = await props.searchParams;
   const page = searchParams.page ? Number(searchParams.page) : 1
   const { products, totalPages } = await getPaginatedProductsWithImages({
     page,

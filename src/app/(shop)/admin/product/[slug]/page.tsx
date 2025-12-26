@@ -5,12 +5,13 @@ import { Title } from '@/components'
 import { ProductForm } from './ui/ProductForm'
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage(props: Props) {
+  const params = await props.params;
   const { slug } = params
 
   const [product, categories] = await Promise.all([

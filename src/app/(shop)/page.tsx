@@ -6,12 +6,13 @@ import { Pagination, ProductGrid, Title } from '@/components'
 export const revalidate = 60 // 60 seconds
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     page?: string
-  }
+  }>
 }
 
-export default async function Home({ searchParams }: Props) {
+export default async function Home(props: Props) {
+  const searchParams = await props.searchParams;
   const page = searchParams.page ? Number(searchParams.page) : 1
   const { products, totalPages } = await getPaginatedProductsWithImages({
     page,

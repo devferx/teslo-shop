@@ -9,12 +9,13 @@ import { OrderStatus, PayPalButton, Title } from '@/components'
 import { currencyFormat } from '@/utils'
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function SingleOrderPage({ params }: Props) {
+export default async function SingleOrderPage(props: Props) {
+  const params = await props.params;
   const { id } = params
 
   const { ok, order } = await getOrderById(id)

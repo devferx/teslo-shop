@@ -8,15 +8,17 @@ import { getPaginatedProductsWithImages } from '@/actions'
 export const revalidate = 60 // 60 seconds
 
 interface Props {
-  params: {
+  params: Promise<{
     gender: Gender
-  }
-  searchParams: {
+  }>
+  searchParams: Promise<{
     page?: string
-  }
+  }>
 }
 
-export default async function CategoryPage({ params, searchParams }: Props) {
+export default async function CategoryPage(props: Props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { gender } = params
   const { page } = searchParams
   const { products, totalPages } = await getPaginatedProductsWithImages({
