@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port=3005",
-    "dev:turbo": "next dev --port=3005 --turbo",
     "build": "npm run prisma:deploy && next build",
     "start": "next start",
     "lint": "eslint .",
