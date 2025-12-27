@@ -39,7 +39,9 @@ export const getPaginatedProductsWithImages = async ({
     })
 
     // Get total count of pages
-    const count = await prisma.product.count({ where: { gender } })
+    const count = await prisma.product.count({
+      where: { gender, deletedAt: null },
+    })
     const totalPages = Math.ceil(count / take)
 
     return {
