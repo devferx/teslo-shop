@@ -26,8 +26,8 @@ export const SizeSelector = ({
             <button
               key={size}
               className={clsx(
-                'border-[rgba(117, 117, 117, 0.2)] rounded-[4px] border',
-                size == selectedSize && 'border-black',
+                'rounded-[4px] border',
+                size == selectedSize ? 'border-black' : 'border-soft-gray',
               )}
               onClick={() => onSizeChanged(size)}
             >
