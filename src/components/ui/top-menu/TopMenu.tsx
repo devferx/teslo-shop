@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { IoCartOutline, IoSearchOutline } from 'react-icons/io5'
+import { IoCartOutline, IoSearchOutline, IoMenuSharp } from 'react-icons/io5'
 
 import { titleFont } from '@/config/fonts'
 import { useCartStore, useUIStore } from '@/store'
@@ -18,7 +18,7 @@ export const TopMenu = () => {
   }, [])
 
   return (
-    <nav className="flex w-full items-center justify-between px-5">
+    <nav className="sticky inset-0 z-30 flex w-full items-center justify-between bg-white px-5">
       {/* Logo */}
       <div>
         <Link href="/">
@@ -54,7 +54,7 @@ export const TopMenu = () => {
       {/* Search, Cart, Menu */}
       <div className="flex items-center">
         <Link className="mx-2" href="/search">
-          <IoSearchOutline className="h-5 w-5" />
+          <IoSearchOutline className="h-6 w-6" />
         </Link>
         <Link
           className="mx-2"
@@ -66,15 +66,15 @@ export const TopMenu = () => {
                 {totalItemsInCart}
               </span>
             )}
-            <IoCartOutline className="h-5 w-5" />
+            <IoCartOutline className="h-6 w-6" />
           </div>
         </Link>
 
         <button
-          className="m-2 p-2 transition-all hover:bg-gray-100"
+          className="m-2 transition-all hover:bg-gray-100"
           onClick={() => openSideMenu()}
         >
-          Menú
+          <IoMenuSharp className="h-8 w-8" />
         </button>
       </div>
     </nav>

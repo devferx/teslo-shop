@@ -39,7 +39,7 @@ export const Sidebar = () => {
       {/* Blur */}
       {isSideMenuOpen && (
         <div
-          className="fade-in fixed left-0 top-0 z-10 h-screen w-screen backdrop-blur-sm backdrop-filter"
+          className="fade-in fixed left-0 top-0 z-40 h-screen w-screen backdrop-blur-sm backdrop-filter"
           onClick={() => closeMenu()}
         />
       )}
@@ -47,7 +47,7 @@ export const Sidebar = () => {
       {/* Sidemenu */}
       <nav
         className={clsx(
-          'fixed right-0 top-0 z-20 h-screen w-[500px] transform bg-white p-5 shadow-2xl transition-all duration-300',
+          'fixed right-0 top-0 z-50 h-screen w-[500px] transform bg-white p-5 shadow-2xl transition-all duration-300',
           {
             'translate-x-full': !isSideMenuOpen,
           },
