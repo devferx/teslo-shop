@@ -24,6 +24,7 @@ export const getPaginatedProductsWithImages = async ({
     const products = await prisma.product.findMany({
       where: {
         gender: gender,
+        deletedAt: null,
       },
       take: take,
       skip: (page - 1) * take,

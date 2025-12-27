@@ -10,6 +10,7 @@ export const getProductBySlug = async (slug: string) => {
       },
       where: {
         slug,
+        deletedAt: null,
       },
     })
 
