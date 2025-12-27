@@ -2,8 +2,13 @@
 import Link from 'next/link'
 import { IoCreateOutline } from 'react-icons/io5'
 
-import { getPaginatedProductsWithImages } from '@/actions'
-import { Pagination, ProductImage, Title } from '@/components'
+import { deleteProductById, getPaginatedProductsWithImages } from '@/actions'
+import {
+  DeleteProductButton,
+  Pagination,
+  ProductImage,
+  Title,
+} from '@/components'
 import { currencyFormat } from '@/utils'
 
 export const revalidate = 0
@@ -20,6 +25,10 @@ export default async function ProductsPage(props: Props) {
   const { products, totalPages } = await getPaginatedProductsWithImages({
     page,
   })
+
+  const onDeleteProduct = async (productId: string) => {
+    deleteProductById(productId)
+  }
 
   return (
     <>
@@ -126,6 +135,7 @@ export default async function ProductsPage(props: Props) {
                     >
                       <IoCreateOutline />
                     </Link>
+                    <DeleteProductButton productId={product.id} />
                   </div>
                 </td>
               </tr>
