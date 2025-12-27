@@ -5,20 +5,28 @@ import { Size } from '@/interfaces'
 interface Props {
   selectedSize?: Size
   availableSizes: Size[]
-
+  showSizeError?: boolean
   onSizeChanged: (size: Size) => void
 }
 
 export const SizeSelector = ({
   availableSizes,
   selectedSize,
+  showSizeError = false,
   onSizeChanged,
 }: Props) => {
   return (
     <div className="my-5">
       <div className="mt-10">
-        <div className="flex justify-between font-semibold">
-          <p>Selecciona tu talla</p>
+        <div className="flex justify-between">
+          <div>
+            <p className="font-semibold">Selecciona tu talla</p>
+            {showSizeError && (
+              <span className="mt-2 text-red-500">
+                Debe de seleccionar una talla*
+              </span>
+            )}
+          </div>
           {/* <p className="text-[#757575]">Guía de tallas</p> */}
         </div>
         <div className="mt-2 grid auto-rows-[48px] grid-cols-3 gap-2">

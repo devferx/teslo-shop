@@ -41,23 +41,19 @@ export const AddToCart = ({ product }: Props) => {
 
   return (
     <>
-      {showSizeError && (
-        <span className="mt-2 text-red-500">
-          Debe de seleccionar una talla*
-        </span>
-      )}
-      {/* Size Select */}
       <SizeSelector
         selectedSize={size}
         availableSizes={product.sizes}
+        showSizeError={showSizeError}
         onSizeChanged={setSize}
       />
 
-      {/* Quantity Select */}
       <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} />
 
-      {/* Button */}
-      <button className="btn-primary my-5" onClick={addToCart}>
+      <button
+        className="my-5 mt-4 w-full rounded-full bg-black py-3 text-white"
+        onClick={addToCart}
+      >
         Agregar al carrito
       </button>
     </>
