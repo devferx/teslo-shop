@@ -25,7 +25,7 @@ export default function CartPage() {
           </div>
 
           {/* Checkout */}
-          <div className="h-fit rounded-xl bg-white p-7 shadow-xl">
+          <div className="h-fit rounded-xl bg-white p-7">
             <h2 className="mb-2 text-2xl">Resumen de orden</h2>
 
             <OrderSummary />
