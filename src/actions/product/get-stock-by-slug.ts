@@ -10,6 +10,7 @@ export const getStockBySlug = async (slug: string): Promise<number> => {
       },
       where: {
         slug,
+        deletedAt: null,
       },
     })
 

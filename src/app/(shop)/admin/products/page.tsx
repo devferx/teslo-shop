@@ -1,11 +1,14 @@
 // https://tailwindcomponents.com/component/hoverable-table
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { IoCardOutline } from 'react-icons/io5'
+import { IoCreateOutline } from 'react-icons/io5'
 
-import { Pagination, ProductImage, Title } from '@/components'
 import { getPaginatedProductsWithImages } from '@/actions'
-import Image from 'next/image'
+import {
+  DeleteProductButton,
+  Pagination,
+  ProductImage,
+  Title,
+} from '@/components'
 import { currencyFormat } from '@/utils'
 
 export const revalidate = 0
@@ -17,7 +20,7 @@ interface Props {
 }
 
 export default async function ProductsPage(props: Props) {
-  const searchParams = await props.searchParams;
+  const searchParams = await props.searchParams
   const page = searchParams.page ? Number(searchParams.page) : 1
   const { products, totalPages } = await getPaginatedProductsWithImages({
     page,
@@ -73,6 +76,12 @@ export default async function ProductsPage(props: Props) {
               >
                 Tallas
               </th>
+              <th
+                scope="col"
+                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+              >
+                Acciones
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -112,6 +121,18 @@ export default async function ProductsPage(props: Props) {
                 </td>
                 <td className="px-6 text-sm font-light text-gray-900">
                   {product.sizes.join(', ')}
+                </td>
+                <td className="px-6 text-sm font-light text-gray-900">
+                  <div className="flex justify-center gap-2">
+                    <Link
+                      href={`/admin/product/${product.slug}`}
+                      className="text-xl hover:text-blue-600"
+                      aria-label="Edit"
+                    >
+                      <IoCreateOutline />
+                    </Link>
+                    <DeleteProductButton productId={product.id} />
+                  </div>
                 </td>
               </tr>
             ))}
