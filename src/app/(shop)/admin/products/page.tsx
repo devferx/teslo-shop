@@ -80,7 +80,7 @@ export default async function ProductsPage(props: Props) {
                 scope="col"
                 className="px-6 py-4 text-left text-sm font-medium text-gray-900"
               >
-                Actions
+                Acciones
               </th>
             </tr>
           </thead>

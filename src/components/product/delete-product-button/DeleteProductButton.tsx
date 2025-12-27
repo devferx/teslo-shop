@@ -14,7 +14,7 @@ export const DeleteProductButton = ({ productId }: Props) => {
   }
 
   return (
-    <button onClick={() => onDeleteProduct(productId)}>
+    <button type="button" onClick={() => onDeleteProduct(productId)}>
       <IoTrashOutline
         className="text-xl hover:text-red-600"
         aria-label="Delete"
