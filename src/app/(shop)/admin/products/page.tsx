@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { IoCreateOutline } from 'react-icons/io5'
 
-import { deleteProductById, getPaginatedProductsWithImages } from '@/actions'
+import { getPaginatedProductsWithImages } from '@/actions'
 import {
   DeleteProductButton,
   Pagination,
@@ -25,10 +25,6 @@ export default async function ProductsPage(props: Props) {
   const { products, totalPages } = await getPaginatedProductsWithImages({
     page,
   })
-
-  const onDeleteProduct = async (productId: string) => {
-    deleteProductById(productId)
-  }
 
   return (
     <>
