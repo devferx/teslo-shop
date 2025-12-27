@@ -17,6 +17,9 @@ export const deleteProductById = async (productId: string) => {
     return { deletedProduct }
   } catch (error) {
     console.error(error)
+    if (error instanceof Error) {
+      throw error
+    }
     throw new Error('No se pudo eliminar el producto')
   }
 }
