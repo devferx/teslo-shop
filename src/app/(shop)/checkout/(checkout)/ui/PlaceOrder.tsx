@@ -68,7 +68,7 @@ export const PlaceOrder = () => {
       </div>
 
       {/*  */}
-      <div className="mb-10 h-0.5 w-full rounded bg-gray-200" />
+      <div className="mb-10 h-0.5 w-full rounded-sm bg-gray-200" />
       <h2 className="mb-2 text-2xl">Resumen de orden</h2>
 
       <div className="grid grid-cols-2">

@@ -23,7 +23,7 @@ export const ProductsInCart = () => {
       {productsInCart.map((product) => (
         <div className="mb-5 flex" key={`${product.slug}-${product.size}`}>
           <Image
-            className="mr-5 rounded"
+            className="mr-5 rounded-sm"
             src={`/products/${product.image}`}
             alt={product.title}
             width={100}

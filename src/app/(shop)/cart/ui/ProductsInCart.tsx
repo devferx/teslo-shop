@@ -30,7 +30,7 @@ export const ProductsInCart = ({}: Props) => {
       {productsInCart.map((product) => (
         <div className="mb-5 flex" key={`${product.slug}-${product.size}`}>
           <ProductImage
-            className="mr-5 rounded object-cover"
+            className="mr-5 rounded-sm object-cover"
             src={product.image}
             alt={product.title}
             width={100}

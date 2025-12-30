@@ -33,7 +33,7 @@ export const OrderSummary = () => {
         <span className="text-right">{currencyFormat(tax)}</span>
       </div>
 
-      <div className="bg-soft-gray h-[1px] w-full"></div>
+      <div className="bg-soft-gray h-px w-full"></div>
 
       <div className="grid grid-cols-2">
         <span className="mt-5 text-2xl">Total:</span>

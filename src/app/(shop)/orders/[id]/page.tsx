@@ -47,7 +47,7 @@ export default async function SingleOrderPage(props: Props) {
             {orderItems.map(({ product, quantity, price, size }) => (
               <div className="mb-5 flex" key={product.slug + '-' + size}>
                 <Image
-                  className="mr-5 rounded"
+                  className="mr-5 rounded-sm"
                   src={`/products/${product.ProductImage[0].url}`}
                   alt={product.title}
                   width={100}
@@ -90,7 +90,7 @@ export default async function SingleOrderPage(props: Props) {
             </div>
 
             {/*  */}
-            <div className="mb-10 h-0.5 w-full rounded bg-gray-200" />
+            <div className="mb-10 h-0.5 w-full rounded-sm bg-gray-200" />
             <h2 className="mb-2 text-2xl">Resumen de orden</h2>
 
             <div className="grid grid-cols-2">

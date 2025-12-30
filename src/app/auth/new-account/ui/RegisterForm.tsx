@@ -42,7 +42,7 @@ export const RegisterForm = () => {
       <div>
         <label htmlFor="email">Nombre completo</label>
         <input
-          className={clsx('mb-5 rounded border bg-gray-200 px-5 py-2', {
+          className={clsx('mb-5 rounded-sm border bg-gray-200 px-5 py-2', {
             'border-red-500': errors.name,
           })}
           type="text"
@@ -57,7 +57,7 @@ export const RegisterForm = () => {
       <div>
         <label htmlFor="email">Correo electrónico</label>
         <input
-          className={clsx('mb-5 rounded border bg-gray-200 px-5 py-2', {
+          className={clsx('mb-5 rounded-sm border bg-gray-200 px-5 py-2', {
             'border-red-500': errors.email,
           })}
           type="email"
@@ -71,7 +71,7 @@ export const RegisterForm = () => {
       <div>
         <label htmlFor="email">Contraseña</label>
         <input
-          className={clsx('mb-5 rounded border bg-gray-200 px-5 py-2', {
+          className={clsx('mb-5 rounded-sm border bg-gray-200 px-5 py-2', {
             'border-red-500': errors.password,
           })}
           type="password"

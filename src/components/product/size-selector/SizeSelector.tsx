@@ -27,7 +27,7 @@ export const SizeSelector = ({
               </span>
             )}
           </div>
-          {/* <p className="text-[#757575]">Guía de tallas</p> */}
+          {/* <p className="text-cgrey">Guía de tallas</p> */}
         </div>
         <div className="mt-2 grid auto-rows-[48px] grid-cols-3 gap-2">
           {availableSizes.map((size) => (

@@ -39,7 +39,7 @@ export const Sidebar = () => {
       {/* Blur */}
       {isSideMenuOpen && (
         <div
-          className="fade-in fixed left-0 top-0 z-40 h-screen w-screen backdrop-blur-sm backdrop-filter"
+          className="fade-in fixed left-0 top-0 z-40 h-screen w-screen backdrop-blur-xs backdrop-filter"
           onClick={() => closeMenu()}
         />
       )}
@@ -63,7 +63,7 @@ export const Sidebar = () => {
         <div className="relative mt-14">
           <IoSearchOutline className="absolute left-2 top-2" size={20} />
           <input
-            className="w-full rounded border-b-2 border-gray-200 bg-gray-50 py-1 pl-10 pr-10 text-xl focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-sm border-b-2 border-gray-200 bg-gray-50 py-1 pl-10 pr-10 text-xl focus:border-blue-500 focus:outline-hidden"
             type="text"
             placeholder="Buscar"
           />
@@ -73,7 +73,7 @@ export const Sidebar = () => {
         {isAuthenticated && (
           <>
             <Link
-              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+              className="mt-10 flex items-center rounded-sm p-2 transition-all hover:bg-gray-100"
               href="/profile"
               onClick={() => closeMenu()}
             >
@@ -82,7 +82,7 @@ export const Sidebar = () => {
             </Link>
 
             <Link
-              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+              className="mt-10 flex items-center rounded-sm p-2 transition-all hover:bg-gray-100"
               href="/orders"
               onClick={() => closeMenu()}
             >
@@ -94,7 +94,7 @@ export const Sidebar = () => {
 
         {isAuthenticated && (
           <button
-            className="mt-10 flex w-full items-center rounded p-2 transition-all hover:bg-gray-100"
+            className="mt-10 flex w-full items-center rounded-sm p-2 transition-all hover:bg-gray-100"
             onClick={onLogout}
           >
             <IoLogOutOutline size={30} />
@@ -103,7 +103,7 @@ export const Sidebar = () => {
         )}
         {!isAuthenticated && (
           <Link
-            className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+            className="mt-10 flex items-center rounded-sm p-2 transition-all hover:bg-gray-100"
             href="/auth/login"
             onClick={() => closeMenu()}
           >
@@ -118,7 +118,7 @@ export const Sidebar = () => {
             <div className="my-10 h-px w-full bg-gray-200" />
 
             <Link
-              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+              className="mt-10 flex items-center rounded-sm p-2 transition-all hover:bg-gray-100"
               href="/admin/products"
               onClick={() => closeMenu()}
             >
@@ -127,7 +127,7 @@ export const Sidebar = () => {
             </Link>
 
             <Link
-              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+              className="mt-10 flex items-center rounded-sm p-2 transition-all hover:bg-gray-100"
               href="/admin/orders"
               onClick={() => closeMenu()}
             >
@@ -136,7 +136,7 @@ export const Sidebar = () => {
             </Link>
 
             <Link
-              className="mt-10 flex items-center rounded p-2 transition-all hover:bg-gray-100"
+              className="mt-10 flex items-center rounded-sm p-2 transition-all hover:bg-gray-100"
               href="/admin/users"
             >
               <IoPeopleOutline size={30} />

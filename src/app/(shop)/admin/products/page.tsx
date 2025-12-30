@@ -93,7 +93,7 @@ export default async function ProductsPage(props: Props) {
                 <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                   <Link href={`/product/${product.slug}`}>
                     <ProductImage
-                      className="h-20 w-20 rounded object-cover"
+                      className="h-20 w-20 rounded-sm object-cover"
                       src={product.ProductImage[0]?.url}
                       width={80}
                       height={80}

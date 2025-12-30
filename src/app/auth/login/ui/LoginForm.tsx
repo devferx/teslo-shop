@@ -22,14 +22,14 @@ export const LoginForm = () => {
     <form action={dispatch} className="flex flex-col">
       <label htmlFor="email">Correo electrónico</label>
       <input
-        className="mb-5 rounded border bg-gray-200 px-5 py-2"
+        className="mb-5 rounded-sm border bg-gray-200 px-5 py-2"
         type="email"
         name="email"
       />
 
       <label htmlFor="email">Contraseña</label>
       <input
-        className="mb-5 rounded border bg-gray-200 px-5 py-2"
+        className="mb-5 rounded-sm border bg-gray-200 px-5 py-2"
         type="password"
         name="password"
       />

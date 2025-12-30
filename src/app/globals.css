@@ -1,6 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-black-1: #111111;
+  --color-cgrey: #757575;
+  --color-cgrey-2: #f5f5f5;
+  --color-orange: #fa5400;
+  --color-soft-gray: rgba(117, 117, 117, 0.2);
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
   --primary: #274494;
@@ -42,15 +72,15 @@ body {
 }
 
 .btn-primary {
-  @apply rounded bg-blue-600 px-4 py-2 text-white transition-all hover:bg-blue-800;
+  @apply rounded-sm bg-blue-600 px-4 py-2 text-white transition-all hover:bg-blue-800;
 }
 
 .btn-secondary {
-  @apply rounded bg-gray-200 px-4 py-2 text-black transition-all hover:bg-gray-300;
+  @apply rounded-sm bg-gray-200 px-4 py-2 text-black transition-all hover:bg-gray-300;
 }
 
 .btn-disabled {
-  @apply cursor-not-allowed rounded bg-gray-600 px-4 py-2 text-white transition-all;
+  @apply cursor-not-allowed rounded-sm bg-gray-600 px-4 py-2 text-white transition-all;
 }
 
 .btn-danger {
