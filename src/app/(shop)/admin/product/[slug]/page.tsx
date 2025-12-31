@@ -5,7 +5,7 @@ import { getCategories, getProductBySlug } from '@/actions'
 
 import { Button } from '@/components/ui/button'
 import { ChevronLeft } from 'lucide-react'
-import { ProductForm } from './ui/ProductForm'
+import { ProductForm } from '@/components'
 
 interface Props {
   params: Promise<{

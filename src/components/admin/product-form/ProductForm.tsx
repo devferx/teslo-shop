@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +9,7 @@ import { Plus, Upload, X } from 'lucide-react'
 import { createUpdateProduct, deleteProductImage } from '@/actions'
 import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
 import { ProductImage } from '@/components'
+import { useTags } from './use-tags'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -67,19 +68,11 @@ export const ProductForm = ({ product, categories }: Props) => {
   const { control, formState, register, handleSubmit, setValue, watch } = form
   const { isValid } = formState
 
-  const [tagDraft, setTagDraft] = useState('')
+  const { tagDraft, setTagDraft, watchedTags, parsedTags, addTag, removeTag } =
+    useTags({ setValue, watch })
+
   const imagesInputRef = useRef<HTMLInputElement | null>(null)
   const imagesField = register('images')
-
-  const watchedTags = watch('tags') ?? ''
-  const parsedTags = useMemo(
-    () =>
-      watchedTags
-        .split(',')
-        .map((tag) => tag.trim())
-        .filter(Boolean),
-    [watchedTags],
-  )
 
   const onSubmit = async (data: ProductFormInputs) => {
     const formData = new FormData()
@@ -112,26 +105,6 @@ export const ProductForm = ({ product, categories }: Props) => {
     }
 
     router.replace(`/admin/product/${updatedProduct?.slug}`)
-  }
-
-  const addTag = () => {
-    if (!tagDraft.trim()) return
-
-    const currentTags = new Set(parsedTags)
-    currentTags.add(tagDraft.trim())
-    setValue('tags', Array.from(currentTags).join(', '), {
-      shouldDirty: true,
-      shouldValidate: true,
-    })
-    setTagDraft('')
-  }
-
-  const removeTag = (tag: string) => {
-    const filtered = parsedTags.filter((item) => item !== tag)
-    setValue('tags', filtered.join(', '), {
-      shouldDirty: true,
-      shouldValidate: true,
-    })
   }
 
   const triggerFileDialog = () => imagesInputRef.current?.click()
@@ -371,10 +344,12 @@ export const ProductForm = ({ product, categories }: Props) => {
                             className="gap-1 px-2 py-1"
                           >
                             {tag}
-                            <X
-                              className="hover:text-destructive h-3 w-3 cursor-pointer"
+                            <button
+                              type="button"
                               onClick={() => removeTag(tag)}
-                            />
+                            >
+                              <X className="hover:text-destructive h-3 w-3 cursor-pointer" />
+                            </button>
                           </Badge>
                         ))}
                       </div>
