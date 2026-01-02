@@ -31,17 +31,6 @@ export default async function ProductPage(props: Props) {
   return (
     <div className="mx-auto max-w-5xl space-y-4 p-8">
       <div className="flex flex-col">
-        <Link href="/admin/products">
-          <Button
-            className="text-muted-foreground hover:text-foreground pl-0"
-            variant="ghost"
-            size="sm"
-          >
-            <ChevronLeft className="mr-2 h-4 w-4" />
-            Volver a productos
-          </Button>
-        </Link>
-
         <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
       </div>
 
