@@ -1,13 +1,14 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 import { createUpdateProduct } from '@/actions'
-import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
-import { useTags } from './use-tags'
+
+import { useTags } from './hooks'
+
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import {
@@ -22,6 +23,7 @@ import type {
   Product,
   ProductImage as ProductWithImage,
 } from '@/interfaces'
+import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
 
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductWithImage[] }
