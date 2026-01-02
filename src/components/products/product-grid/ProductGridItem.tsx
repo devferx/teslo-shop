@@ -26,7 +26,7 @@ export const ProductGridItem = ({ product }: Props) => {
           onMouseEnter={() =>
             setDisplayImage(product.images[1] ?? product.images[0])
           }
-          onMouseLeave={() => setDisplayImage(product.images[0])}
+          onMouseLeave={() => setDisplayImage(product.images[0] ?? '')}
         />
       </Link>
 
