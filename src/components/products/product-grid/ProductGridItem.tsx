@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 
-import { Product } from '@/interfaces'
-import { resolveProductImage } from '@/utils'
+import { ProductImage } from '@/components'
+
+import type { Product } from '@/interfaces'
 
 interface Props {
   product: Product
@@ -13,14 +13,13 @@ interface Props {
 
 export const ProductGridItem = ({ product }: Props) => {
   const [displayImage, setDisplayImage] = useState(product.images[0] ?? '')
-  const displayImageUrl = resolveProductImage(displayImage)
 
   return (
     <div className="fade-in overflow-hidden rounded-md">
       <Link href={`/product/${product.slug}`}>
-        <Image
+        <ProductImage
           className="w-full rounded-sm object-cover"
-          src={displayImageUrl}
+          src={displayImage}
           alt={product.title}
           width={500}
           height={500}
