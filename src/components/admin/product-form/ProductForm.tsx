@@ -141,10 +141,8 @@ export const ProductForm = ({ product, categories }: Props) => {
     const files = event.target.files
     if (!files) return
 
-    // Limpiar URLs previas
     imagePreviews.forEach((url) => URL.revokeObjectURL(url))
 
-    // Crear nuevas URLs de preview
     const newPreviews = Array.from(files).map((file) =>
       URL.createObjectURL(file),
     )
@@ -152,14 +150,11 @@ export const ProductForm = ({ product, categories }: Props) => {
   }
 
   const removeImagePreview = (index: number) => {
-    // Revocar la URL del preview
     URL.revokeObjectURL(imagePreviews[index])
 
-    // Actualizar el estado
     const newPreviews = imagePreviews.filter((_, i) => i !== index)
     setImagePreviews(newPreviews)
 
-    // Actualizar el input de archivos
     if (imagesInputRef.current) {
       const dt = new DataTransfer()
       const files = imagesInputRef.current.files
