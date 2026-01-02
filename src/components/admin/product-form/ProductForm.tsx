@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -53,6 +53,8 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 export const ProductForm = ({ product, categories }: Props) => {
   const router = useRouter()
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<ProductFormInputs>({
     resolver: zodResolver(ProductFormSchema),
@@ -74,40 +76,104 @@ export const ProductForm = ({ product, categories }: Props) => {
   const imagesInputRef = useRef<HTMLInputElement | null>(null)
   const imagesField = register('images')
 
+  useEffect(() => {
+    return () => {
+      imagePreviews.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [imagePreviews])
+
+  const clearNewImages = () => {
+    imagePreviews.forEach((url) => URL.revokeObjectURL(url))
+    setImagePreviews([])
+    if (imagesInputRef.current) {
+      imagesInputRef.current.value = ''
+    }
+    const emptyFiles = new DataTransfer().files
+    setValue('images', emptyFiles as FileList)
+  }
+
   const onSubmit = async (data: ProductFormInputs) => {
-    const formData = new FormData()
-    const { images, ...productToSave } = data
+    setIsSubmitting(true)
+    try {
+      const formData = new FormData()
+      const { images, ...productToSave } = data
 
-    if (product.id) {
-      formData.append('id', product.id)
-    }
-    formData.append('title', productToSave.title)
-    formData.append('slug', productToSave.slug)
-    formData.append('description', productToSave.description)
-    formData.append('price', productToSave.price.toString())
-    formData.append('inStock', productToSave.inStock.toString())
-    formData.append('sizes', productToSave.sizes.toString())
-    formData.append('tags', productToSave.tags)
-    formData.append('categoryId', productToSave.categoryId)
-    formData.append('gender', productToSave.gender)
-
-    if (images) {
-      for (let idx = 0; idx < images.length; idx++) {
-        formData.append('images', images[idx])
+      if (product.id) {
+        formData.append('id', product.id)
       }
-    }
+      formData.append('title', productToSave.title)
+      formData.append('slug', productToSave.slug)
+      formData.append('description', productToSave.description)
+      formData.append('price', productToSave.price.toString())
+      formData.append('inStock', productToSave.inStock.toString())
+      formData.append('sizes', productToSave.sizes.toString())
+      formData.append('tags', productToSave.tags)
+      formData.append('categoryId', productToSave.categoryId)
+      formData.append('gender', productToSave.gender)
 
-    const { ok, product: updatedProduct } = await createUpdateProduct(formData)
+      if (images) {
+        for (let idx = 0; idx < images.length; idx++) {
+          formData.append('images', images[idx])
+        }
+      }
 
-    if (!ok) {
+      const { ok, product: updatedProduct } =
+        await createUpdateProduct(formData)
+
+      if (!ok) {
+        alert('Producto no guardado')
+        return
+      }
+
+      clearNewImages()
+      router.replace(`/admin/product/${updatedProduct?.slug}`)
+    } catch (error) {
+      console.log(error)
       alert('Producto no guardado')
-      return
+    } finally {
+      setIsSubmitting(false)
     }
-
-    router.replace(`/admin/product/${updatedProduct?.slug}`)
   }
 
   const triggerFileDialog = () => imagesInputRef.current?.click()
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    if (!files) return
+
+    // Limpiar URLs previas
+    imagePreviews.forEach((url) => URL.revokeObjectURL(url))
+
+    // Crear nuevas URLs de preview
+    const newPreviews = Array.from(files).map((file) =>
+      URL.createObjectURL(file),
+    )
+    setImagePreviews(newPreviews)
+  }
+
+  const removeImagePreview = (index: number) => {
+    // Revocar la URL del preview
+    URL.revokeObjectURL(imagePreviews[index])
+
+    // Actualizar el estado
+    const newPreviews = imagePreviews.filter((_, i) => i !== index)
+    setImagePreviews(newPreviews)
+
+    // Actualizar el input de archivos
+    if (imagesInputRef.current) {
+      const dt = new DataTransfer()
+      const files = imagesInputRef.current.files
+
+      if (files) {
+        Array.from(files).forEach((file, i) => {
+          if (i !== index) {
+            dt.items.add(file)
+          }
+        })
+        imagesInputRef.current.files = dt.files
+      }
+    }
+  }
 
   return (
     <Form {...form}>
@@ -419,6 +485,33 @@ export const ProductForm = ({ product, categories }: Props) => {
                     </div>
                   ))}
 
+                  {imagePreviews.map((preview, index) => (
+                    <div
+                      className="group border-border/50 bg-muted/40 relative overflow-hidden rounded-lg border shadow-sm"
+                      key={`preview-${index}`}
+                    >
+                      <img
+                        src={preview}
+                        alt={`Preview ${index + 1}`}
+                        className="h-full w-full object-cover"
+                        width={400}
+                        height={400}
+                      />
+                      <Button
+                        className="absolute top-2 right-2 h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100"
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => removeImagePreview(index)}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                      <div className="bg-primary/80 text-primary-foreground absolute bottom-2 left-2 rounded px-2 py-1 text-xs">
+                        Nueva
+                      </div>
+                    </div>
+                  ))}
+
                   <button
                     type="button"
                     onClick={triggerFileDialog}
@@ -439,6 +532,10 @@ export const ProductForm = ({ product, categories }: Props) => {
                   type="file"
                   accept="image/*"
                   multiple
+                  onChange={(event) => {
+                    imagesField.onChange(event)
+                    handleImageChange(event)
+                  }}
                 />
               </CardContent>
             </Card>
@@ -454,7 +551,11 @@ export const ProductForm = ({ product, categories }: Props) => {
           >
             Cancelar
           </Button>
-          <Button type="submit" className="w-48" disabled={!isValid}>
+          <Button
+            type="submit"
+            className="w-48"
+            disabled={!isValid || isSubmitting}
+          >
             Guardar producto
           </Button>
         </div>
