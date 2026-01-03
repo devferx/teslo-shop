@@ -45,6 +45,7 @@ export const AttributesSection = ({
   watch,
   setValue,
 }: AttributesSectionProps) => {
+  // TODO: Improve the parameters passed to useTags
   const { parsedTags, tagDraft, watchedTags, addTag, removeTag, setTagDraft } =
     useTags({ setValue, watch })
 
