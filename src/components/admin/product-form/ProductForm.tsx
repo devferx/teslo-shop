@@ -1,5 +1,7 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import { useTags, useProductForm, useProductImages } from './hooks'
 
 import { Button } from '@/components/ui/button'
@@ -16,6 +18,7 @@ import type {
   Product,
   ProductImage as ProductWithImage,
 } from '@/interfaces'
+
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductWithImage[] }
   categories: Category[]
@@ -24,10 +27,11 @@ interface Props {
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 export const ProductForm = ({ product, categories }: Props) => {
-  const { form, buildSubmitHandler, isSubmitting, isValid, goBack } =
-    useProductForm({
-      product,
-    })
+  const router = useRouter()
+
+  const { form, buildSubmitHandler, isSubmitting, isValid } = useProductForm({
+    product,
+  })
 
   const { control, register, setValue, watch } = form
 
@@ -49,6 +53,10 @@ export const ProductForm = ({ product, categories }: Props) => {
   }
 
   const handleSubmit = buildSubmitHandler(onSuccessfulSubmission)
+
+  const goBack = () => {
+    router.back()
+  }
 
   return (
     <Form {...form}>

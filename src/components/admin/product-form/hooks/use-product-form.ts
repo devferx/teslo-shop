@@ -1,11 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { createUpdateProduct } from '@/actions'
-import type { Product, ProductImage as ProductWithImage } from '@/interfaces'
+
 import { ProductFormSchema, type ProductFormInputs } from '@/schemas'
-import { zodResolver } from '@hookform/resolvers/zod'
+
+import type { Product, ProductImage as ProductWithImage } from '@/interfaces'
 
 interface UseProductFormProps {
   product: Partial<Product> & { ProductImage?: ProductWithImage[] }
@@ -26,6 +28,8 @@ export const useProductForm = ({ product }: UseProductFormProps) => {
     },
   })
 
+  const isValid = form.formState.isValid
+
   const buildSubmitHandler = useCallback(
     (onSuccess?: () => void) =>
       form.handleSubmit(async (data: ProductFormInputs) => {
@@ -37,6 +41,7 @@ export const useProductForm = ({ product }: UseProductFormProps) => {
           if (product.id) {
             formData.append('id', product.id)
           }
+
           formData.append('title', productToSave.title)
           formData.append('slug', productToSave.slug)
           formData.append('description', productToSave.description)
@@ -73,13 +78,10 @@ export const useProductForm = ({ product }: UseProductFormProps) => {
     [form, product.id, router],
   )
 
-  const goBack = () => router.back()
-
   return {
     form,
-    buildSubmitHandler,
     isSubmitting,
-    isValid: form.formState.isValid,
-    goBack,
+    isValid,
+    buildSubmitHandler,
   }
 }
