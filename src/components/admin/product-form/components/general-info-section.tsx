@@ -1,6 +1,5 @@
 import { Control } from 'react-hook-form'
 
-import { ProductFormInputs } from '@/schemas'
 import {
   Card,
   CardContent,
@@ -17,6 +16,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+
+import type { ProductFormInputs } from '@/schemas'
 
 interface GeneralInfoSectionProps {
   control: Control<ProductFormInputs>
@@ -73,7 +74,7 @@ export const GeneralInfoSection = ({ control }: GeneralInfoSectionProps) => (
             <FormLabel>Descripción</FormLabel>
             <FormControl>
               <Textarea
-                className="min-h-30"
+                className="min-h-30 resize-none"
                 placeholder="Describe tu producto..."
                 {...field}
                 value={field.value ?? ''}
