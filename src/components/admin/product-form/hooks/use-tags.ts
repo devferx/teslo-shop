@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { UseFormSetValue, UseFormWatch } from 'react-hook-form'
+
 import type { ProductFormInputs } from '@/schemas'
 
 interface UseTagsProps {
@@ -33,7 +34,6 @@ export const useTags = ({ setValue, watch }: UseTagsProps) => {
   }
 
   const removeTag = (tag: string) => {
-    console.log('🚀 ~ removeTag ~ tag:', tag)
     const filtered = parsedTags.filter((item) => item !== tag)
     setValue('tags', filtered.join(', '), {
       shouldDirty: true,
