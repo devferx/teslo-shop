@@ -24,11 +24,15 @@ export const useProductImages = ({
 
   const clearNewImages = () => {
     imagePreviews.forEach((url) => URL.revokeObjectURL(url))
+
     setImagePreviews([])
+
     if (imagesInputRef.current) {
       imagesInputRef.current.value = ''
     }
+
     const emptyFiles = new DataTransfer().files
+
     setValue('images', emptyFiles as FileList)
   }
 
