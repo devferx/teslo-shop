@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { createUpdateProduct } from '@/actions'
 
@@ -62,15 +63,16 @@ export const useProductForm = ({ product }: UseProductFormProps) => {
             await createUpdateProduct(formData)
 
           if (!ok) {
-            alert('Producto no guardado')
+            toast.error('Error al guardar el producto')
             return
           }
 
           onSuccess?.()
+          toast.success('Producto guardado con éxito')
           router.replace(`/admin/product/${updatedProduct?.slug}`)
         } catch (error) {
           console.log(error)
-          alert('Producto no guardado')
+          toast.error('Producto no guardado')
         } finally {
           setIsSubmitting(false)
         }
