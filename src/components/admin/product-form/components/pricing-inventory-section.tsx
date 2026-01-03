@@ -1,6 +1,7 @@
+'use client'
+
 import { Control } from 'react-hook-form'
 
-import { ProductFormInputs } from '@/schemas'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   FormControl,
@@ -10,6 +11,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+
+import type { ProductFormInputs } from '@/schemas'
 
 interface PricingInventorySectionProps {
   control: Control<ProductFormInputs>
