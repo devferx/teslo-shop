@@ -22,6 +22,14 @@ export const createUpdateProduct = async (formData: FormData) => {
   const { id, ...rest } = product
 
   try {
+    let uploadedImages: (string | null)[] | null = null
+    if (formData.getAll('images').length > 0) {
+      uploadedImages = await uploadImages(formData.getAll('images') as File[])
+      if (!uploadedImages) {
+        throw new Error('No se pudo cargar las imágenes')
+      }
+    }
+
     const prismaTx = await prisma.$transaction(async (tx) => {
       let product: Product
       const tagsArray = rest.tags.split(',').map((tag) => tag.trim())
@@ -46,16 +54,9 @@ export const createUpdateProduct = async (formData: FormData) => {
         })
       }
 
-      // Proceso de carga y guardado de images
-      // Recorrer las iamgenes y guardarlas
-      if (formData.getAll('images')) {
-        const images = await uploadImages(formData.getAll('images') as File[])
-        if (!images) {
-          throw new Error('No se pudo cargar las imágenes')
-        }
-
+      if (uploadedImages && uploadedImages.length > 0) {
         await tx.productImage.createMany({
-          data: images.map((image) => ({
+          data: uploadedImages.map((image) => ({
             url: image!,
             productId: product.id,
           })),

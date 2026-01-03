@@ -1,3 +1,5 @@
+export * from './admin/product-form/ProductForm'
+
 export * from './products/product-grid/ProductGrid'
 export * from './products/product-grid/ProductGridItem'
 
