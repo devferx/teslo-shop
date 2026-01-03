@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { useTags, useProductForm, useProductImages } from './hooks'
+import { useProductForm, useProductImages } from './hooks'
 
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
@@ -45,9 +45,6 @@ export const ProductForm = ({ product, categories }: Props) => {
     clearNewImages,
   } = useProductImages({ register, setValue })
 
-  const { tagDraft, setTagDraft, watchedTags, parsedTags, addTag, removeTag } =
-    useTags({ setValue, watch })
-
   const onSuccessfulSubmission = () => {
     clearNewImages()
   }
@@ -72,12 +69,8 @@ export const ProductForm = ({ product, categories }: Props) => {
               control={control}
               categories={categories}
               sizes={sizes}
-              tagDraft={tagDraft}
-              setTagDraft={setTagDraft}
-              parsedTags={parsedTags}
-              watchedTags={watchedTags}
-              addTag={addTag}
-              removeTag={removeTag}
+              setValue={setValue}
+              watch={watch}
             />
 
             <PhotosSection
